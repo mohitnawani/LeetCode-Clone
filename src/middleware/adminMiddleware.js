@@ -12,6 +12,8 @@ const userMiddleware= async(req,res,next)=>{
         const payload =jwt.verify(token,process.env.JWT_KEY);
         const {_id}=payload;
 
+        // console.log(payload);
+
         if(!_id)
         {
             throw new Error("Invalid Token");
@@ -23,9 +25,10 @@ const userMiddleware= async(req,res,next)=>{
             throw new Error("User Doesn't Exist");
         }
         // res.send(payload);
+        // console.log(payload.role);
         if(payload.role!='admin')
         {
-            throw new Error("Access Denied");
+            throw new Error("he is not admin ");
         }
 
 
@@ -47,7 +50,7 @@ const userMiddleware= async(req,res,next)=>{
 
     catch(err)
     {
-        res.status(401).send("Error: "+ err.message)
+        res.status(401).send("FROM MIDDLEWARE "+err.message);
     }
 }
 

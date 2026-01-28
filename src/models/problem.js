@@ -21,7 +21,7 @@ const problemSchema = new Schema({
 
     tags:{
         type:String,
-        enum:['array','linkedList','graph','dp'],
+        enum:['array','linkedList','graph','dp', 'math','tree','stack','queue','string','sorting','searching','greedy','bitManipulation','recursion','design','heap','hashTable','slidingWindow','twoPointers','unionFind','backtracking'],
         required:true
     },
 
@@ -85,7 +85,7 @@ const problemSchema = new Schema({
                 required:true
 
             },
-            code:{
+            completeCode:{
                 type:String,
                 required:true
 

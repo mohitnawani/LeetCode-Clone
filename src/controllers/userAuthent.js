@@ -6,6 +6,8 @@ const redis = require("../config/redis");
 
 const register = async (req, res) => {
   try {
+
+    console.log(req.body);
     //validate the data;
     validate(req.body);
     const { firstName, emailId, password } = req.body;
