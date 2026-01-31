@@ -41,7 +41,7 @@ const options = {
   async function fetchData() {
     try {
       const response = await axios.request(options);
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error) {
       console.error(error);

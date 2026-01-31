@@ -1,5 +1,5 @@
 const mongoose =require("mongoose");
-const Schema=require("schema");
+const Schema =mongoose.Schema;
 
 const submissionSchema = new Schema({
   userId: {
@@ -19,7 +19,7 @@ const submissionSchema = new Schema({
   language: {
     type: String,
     required: true,
-    enum: ['javascript', 'cpp', 'java'] 
+    enum: ['javascript', 'c++', 'java'] 
   },
   status: {
     type: String,

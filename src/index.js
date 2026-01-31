@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/user',authRouter);
-app.use('/problem',problemRouter)
-app.use('/submission',submitRouter)
+app.use('/problem',problemRouter);
+app.use('/submission',submitRouter);
 
 // app.get('/', (req, res) => {
 //   res.send('Server is running');
