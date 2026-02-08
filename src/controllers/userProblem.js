@@ -1,4 +1,5 @@
 const problem = require("../models/problem");
+const User = require("../models/user");
 
 const {
   getLanguageById,
@@ -164,7 +165,10 @@ const getAllProblem = async (req,res)=>{
 const solvedAllProblembyUser =async (req , res)=>{
   try{
     const userId =req.result._id;
-    const user =await User.findById (userId).populate('problemSolved')
+    const user =await User.findById (userId).populate({
+      path:'problemSolved',
+      select : '_id title difficulty tags'
+    })
     res.status(200).send(user.problemSolved);
   }
 

@@ -35,11 +35,11 @@ const submitCode = async (req, res) => {
       code,
       language,
       status: "pending",
-      Totaltestcases: Problem_Data.visibleTestCases.length
+      Totaltestcases: Problem_Data.HiddenTestCases.length
     });
 
     const langauage_id = getLanguageById(language);
-    const submissions = Problem_Data.visibleTestCases.map((testcase) => ({
+    const submissions = Problem_Data.HiddenTestCases.map((testcase) => ({
       source_code: code,
       language_id: langauage_id,
       stdin: testcase.input,
@@ -105,5 +105,56 @@ const submitCode = async (req, res) => {
   }
 };
 
-module.exports = submitCode;
+const runCode = async (req, res) => {
+  try {
+    const userId = req.result._id;
+    const problemId = req.params.id;
+
+    const { code, language } = req.body;
+    // console.log(language);
+
+    if (!userId || !code || !problemId || !language)
+      return res.status(400).send("some field missing");
+
+    const Problem_Data = await problem.findById(problemId);
+
+    // console.log(Problem_Data);
+
+    if (!Problem_Data) {
+      return res.status(404).send("Problem not found");
+    }
+
+    // console.log(Problem_Data.HiddenTestCases)
+
+
+    const langauage_id = getLanguageById(language);
+    const submissions = Problem_Data.visibleTestCases.map((testcase) => ({
+      source_code: code,
+      language_id: langauage_id,
+      stdin: testcase.input,
+      expected_output: testcase.output,
+    }));
+
+    // console.log(submissions);
+
+    const submitResult = await submitBatch(submissions);
+        
+    const resultToken = submitResult.map((value)=> value.token);
+    
+    const testResult = await submitToken(resultToken);
+
+    console.log(testResult)
+
+      for (const test of testResult) {
+        if (test.status_id != 3) return res.status(400).send("Error Occured");
+      }
+
+    return res.status(200).send("problem run successfully");
+
+  } catch (err) {
+    throw "ERROR" + err;
+  }
+};
+
+module.exports = { submitCode, runCode };
 
